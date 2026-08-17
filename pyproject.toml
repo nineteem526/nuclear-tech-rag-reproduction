@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nuclear-tech-rag"
+version = "0.1.0"
+description = "A learning-oriented reproduction of an enterprise technical-document RAG system."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.11,<3",
+    "pymupdf>=1.26,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4,<9",
+    "pytest-cov>=6.2,<7",
+    "reportlab>=4.4,<5",
+]
+
+[project.scripts]
+rag-pdf = "rag_system.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rag_system"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --basetemp=.pytest-tmp"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+branch = true
+source = ["rag_system"]
+
